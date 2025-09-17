@@ -3,22 +3,24 @@ import { CabinetEditor } from "./pages/cabinet/CabinetEditor";
 import { CutListEditor } from "./pages/cutlist/Cutlist";
 import './styles/index.scss';
 import {
-	BrowserRouter as Router,
+	HashRouter as Router,
 	Routes,
 	Route,
-	Link,
 	NavLink
 } from "react-router";
 
+function linkClassName({ isActive }: { isActive: boolean }) {
+	return isActive ? '--active' : '';
+}
 
 export function App() {
 	return (
 		<div className="app">
 			<Router>
 				<nav className="ww-nabbar">
-					<NavLink className={x => x.isActive ? '--active' : ''} to="/">Home</NavLink>
-					<NavLink className={x => x.isActive ? '--active' : ''} to="/cabinet">Cabinet</NavLink >
-					<NavLink className={x => x.isActive ? '--active' : ''} to="/cutlist">Cutlist</NavLink>
+					<NavLink className={linkClassName} to="">Home</NavLink>
+					<NavLink className={linkClassName} to="cabinet">Cabinet</NavLink >
+					<NavLink className={linkClassName} to="cutlist">Cutlist</NavLink>
 				</nav>
 				<main>
 					<Routes>

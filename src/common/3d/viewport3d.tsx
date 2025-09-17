@@ -22,7 +22,7 @@ export function Viewport3D(props: Viewport3DProps) {
         var height = container.offsetHeight;
         var camera = new PerspectiveCamera(75, width / height, 0.1, 10000);
 
-        var renderer = new WebGLRenderer();
+        var renderer = new WebGLRenderer({ antialias: true });
         renderer.setSize(width, height);
         container.appendChild(renderer.domElement);
         var controls = new OrbitControls( camera, renderer.domElement );
