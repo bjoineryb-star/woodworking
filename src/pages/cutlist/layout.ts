@@ -22,8 +22,9 @@ export function layoutParts(parts: Part[], totalWidth: number, totalHeight: numb
     return positioned;
 }
 
-export function flipSizes(parts: Part[]): Part[] {
+export function flipSizes<T extends Part = Part>(parts: T[]): T[] {
     return parts.map(part => ({
+        ...part,
         width: part.height,
         height: part.width,
         number: part.number

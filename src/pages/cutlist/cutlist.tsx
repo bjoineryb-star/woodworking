@@ -6,6 +6,7 @@ import { flipSizes, layoutParts } from "./layout";
 import "./Cutlist.scss";
 
 interface PartLine extends Part {
+    name: string;
     number: number;
 }
 
@@ -15,12 +16,13 @@ interface CutListState {
 }
 
 const initialPart = {
+    name: "",
     width: 0,
     height: 0,
     number: 1  
 }
 
-export function CutListEditor(props: any) {
+export function CutListEditor() {
     const location = useLocation();
     const [sheetSize, setSheetSize, reset] = useLocalStorage("sheetSize", { width: 2750, height: 1830 });
     const onSheetSizeInputChange = useInputChange(setSheetSize);
@@ -83,9 +85,10 @@ export function CutListEditor(props: any) {
                         <Button onClick={() => reset()}>Reset</Button>
                     </div>
                 </fieldset>
-                <table>
+                <table className="ww-parts-table">
                     <thead>
                         <tr>
+                            <th>Name</th>
                             <th>Number</th>
                             <th>Width</th>
                             <th>Height</th>
@@ -94,13 +97,15 @@ export function CutListEditor(props: any) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input name="number" value={newPart.number} onChange={onNewPartInputChange} /></td>
-                            <td><input name="width" value={newPart.width} onChange={onNewPartInputChange} /></td>
-                            <td><input name="height" value={newPart.height} onChange={onNewPartInputChange} /></td>
+                            <td><input name="name" type="text" value={newPart.name} onChange={onNewPartInputChange} /></td>
+                            <td><input name="number" type="number" value={newPart.number} onChange={onNewPartInputChange} /></td>
+                            <td><input name="width" type="number" value={newPart.width} onChange={onNewPartInputChange} /></td>
+                            <td><input name="height" type="number" value={newPart.height} onChange={onNewPartInputChange} /></td>
                             <td><Button className="w-100" onClick={() => addPart()}>Add</Button></td>
                         </tr>
                         {parts.map((p, i) => {
                             return (<tr key={i}>
+                                <td>{p.name}</td>
                                 <td>{p.number}</td>
                                 <td>{p.width}</td>
                                 <td>{p.height}</td>

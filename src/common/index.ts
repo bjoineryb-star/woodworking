@@ -3,4 +3,5 @@ export * from './Form';
 export * from './forms/InputLayout';
 export * from './useLocalStorage';
 export * from './useInputChange';
+export * from './useDialogState';
 export * from './utils';

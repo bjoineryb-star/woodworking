@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import React from "react";
 import { Viewport3D } from "../../common/3d/Viewport3d";
-import { BoxType, calcCabinetStats, createCabinetModel } from "../../common/3d/utils";
+import { buildCabinetParts, CabinetModel, calcCabinetStats, createCabinetModel } from "./logic";
 import { Button, Form, InputLayout, useInputChange } from "../../common";
 import { useNavigate } from "react-router";
 import { lineColor, sideColor } from "../../config";
@@ -15,37 +15,18 @@ export function CabinetEditor(props: any) {
 		height: 720,
 		depth: 550,
 		thickness: 18,
-		boxType: "TypeA" as BoxType,
+		boxType: "TypeA",
+		backSide: "",
 		verticalDividers: 0,
 		horizontalDividers: 0,
-		dividersType: "TypeB" as BoxType
-	}));
+		dividersType: "TypeB"
+	} as CabinetModel));
+
 	const onInputChange = useInputChange(setState);
+	const model = useMemo(() => createCabinetModel(state, sideColor, lineColor), [state]);
+	const stats = useMemo(() => calcCabinetStats(state), [state]);
 
-	const model = useMemo(() => createCabinetModel(state.width, state.height, state.depth, state.thickness,
-		state.verticalDividers, state.horizontalDividers, sideColor, lineColor, state.boxType, state.dividersType), [state]);
-
-	const stats = useMemo(() => calcCabinetStats(state.width, state.height, state.thickness, state.verticalDividers, state.horizontalDividers), [state]);
-
-	function build() {
-		const { width, height, depth, boxType, verticalDividers, horizontalDividers, dividersType } = state;
-		const { innerW, innerH, cellW, cellH } = stats;
-
-		let parts = [
-			{ width: depth, height: boxType == "TypeA" ? innerW : width, number: 2 },
-			{ width: depth, height: boxType == "TypeB" ? innerH : height, number: 2 },
-		];
-
-		if (dividersType == "TypeA") {
-			parts.push({ width: depth, height: innerH, number: verticalDividers });
-			parts.push({ width: depth, height: cellW, number: (verticalDividers + 1) * horizontalDividers });
-		} else if (dividersType == "TypeB") {
-			parts.push({ width: depth, height: innerW, number: horizontalDividers });
-			parts.push({ width: depth, height: cellH, number: (horizontalDividers + 1) * verticalDividers });
-		}
-
-		navigate("/cutlist", { state: { parts: parts.filter(x => x.number > 0) } });
-	}
+	const handleBuildClick = () => navigate("/cutlist", { state: { parts: buildCabinetParts(state) } });
 
 	return (<div className="hstack gap-1">
 		<Form className="flex-grow">
@@ -60,6 +41,12 @@ export function CabinetEditor(props: any) {
 			</InputLayout>
 			<InputLayout label="Thickness">
 				<input name="thickness" type="number" value={state.thickness} onChange={onInputChange} />
+			</InputLayout>
+
+			<InputLayout label="Back Side">
+				<label><input name="backSide" type="radio" value="" onChange={onInputChange} defaultChecked /> None</label>
+				<label><input name="backSide" type="radio" value="TypeA" onChange={onInputChange} /> Type A</label>
+				<label><input name="backSide" type="radio" value="TypeB" onChange={onInputChange} /> Type B</label>
 			</InputLayout>
 			<InputLayout label="Box Type">
 				<label><input name="boxType" type="radio" value="TypeA" onChange={onInputChange} defaultChecked /> Type A</label>
@@ -82,7 +69,7 @@ export function CabinetEditor(props: any) {
 			<div>Cell Height: {stats.cellH}</div>
 
 			<div className="hstack gap-1">
-				<Button onClick={build}>Build Cutlist</Button>
+				<Button onClick={handleBuildClick}>Build Cutlist</Button>
 				<Button onClick={() => reset()}>Reset</Button>
 			</div>
 		</Form>
