@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import React from "react";
-import { Viewport3D } from "../../common/3d/Viewport3d";
+import { Viewport3D } from "../../common/3d/viewport3d";
 import { buildCabinetParts, CabinetModel, calcCabinetStats, createCabinetModel } from "./logic";
 import { Button, Form, InputLayout, useInputChange } from "../../common";
 import { useNavigate } from "react-router";
