@@ -3,7 +3,7 @@ import { Part } from "./core";
 import { Button, InputLayout,  useInputChange, useLocalStorage } from "../../common";
 import { useLocation } from "react-router";
 import { flipSizes, layoutParts } from "./layout";
-import "./Cutlist.scss";
+import "./cutlist.scss";
 
 interface PartLine extends Part {
     name: string;
