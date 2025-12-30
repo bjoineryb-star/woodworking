@@ -18,7 +18,7 @@
     "parcel-namer-hashless": "^1.0.7"
   },
   "scripts": {
-    "prebuild": "del /s /q dist",
+    "prebuild": "rimraf dist",
     "start": "parcel",
     "build": "parcel build --no-content-hash --public-url ./"
   },
