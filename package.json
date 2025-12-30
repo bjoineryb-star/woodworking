@@ -19,10 +19,10 @@
     "parcel-namer-hashless": "^1.0.7"
   },
   "scripts": {
-    "prebuild": "rimraf dist",
-    "start": "parcel",
-    "build": "parcel build --no-content-hash --public-url ./"
-  },
+  "prebuild": "rimraf dist",
+  "build": "parcel build src/index.html --no-content-hash --public-url ./",
+  "start": "parcel src/index.html"
+}
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zVolodymyr/woodworking.git"
