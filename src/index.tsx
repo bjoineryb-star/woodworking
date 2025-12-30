@@ -9,9 +9,4 @@ const container = document.getElementById("root");
 
 if (!container) {
   throw new Error("Root container missing");
-}
-
-createRoot(container).render(<App />);
-
-const root = createRoot(document.getElementById('root'));
-root.render(<App/>);
+};
