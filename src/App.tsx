@@ -2,6 +2,9 @@ import React from "react";
 import { CabinetEditor } from "./pages/cabinet/CabinetEditor";
 import { CutListEditor } from "./pages/cutlist/cutlist";
 import './styles/index.scss';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AppLayout } from "./layout/AppLayout";
+import Home from "./pages/Home";
 import {
 	HashRouter as Router,
 	Routes,
@@ -11,6 +14,20 @@ import {
 
 function linkClassName({ isActive }: { isActive: boolean }) {
 	return isActive ? '--active' : '';
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/cabinet" element={<CabinetEditor />} />
+          <Route path="/cutlist" element={<CutListEditor />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export function App() {
