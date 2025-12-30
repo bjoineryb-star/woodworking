@@ -1,6 +1,6 @@
 import React from "react";
 import { CabinetEditor } from "./pages/cabinet/CabinetEditor";
-import { CutListEditor } from "./pages/cutlist/Cutlist";
+import { CutListEditor } from "./pages/cutlist/cutlist";
 import './styles/index.scss';
 import {
 	HashRouter as Router,
